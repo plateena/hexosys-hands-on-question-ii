@@ -13,12 +13,14 @@ class ModeratorController extends Controller
     public function process(Request $request)
     {
         //provide your solution here.
+        $url = 'https://asia-east2-falcon-293005.cloudfunctions.net/falcon';
         try {
-            $url = 'https://asia-east2-falcon-293005.cloudfunctions.net/falcon';
             $response = Http::withBody(
-                $request->getContent(),
+                $this->getContent($request),
                 'image/jpeg'
-            )
+            )->withHeaders([
+                "Min-Confidence" => '0.50'
+            ])
                 ->post($url);
 
             return response($this->fixJson($response->body()), $response->status());
@@ -39,5 +41,13 @@ class ModeratorController extends Controller
     protected function addMissingQuote(array $str): string
     {
         return '"' . $str[1] . '"' . $str[2];
+    }
+
+    private function getContent(Request $request): string
+    {
+        if ($request->header('Content-Type') == 'image/jpeg') {
+            return $request->getContent();
+        }
+        return Http::get("http://" . $request->get("imageUrl"))->body();
     }
 }
