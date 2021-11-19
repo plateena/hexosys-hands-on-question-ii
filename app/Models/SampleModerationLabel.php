@@ -15,4 +15,9 @@ class SampleModerationLabel extends Model
     use HasFactory;
 
     public $fillable = ['name', 'confidence'];
+
+    public function sample()
+    {
+        $this->belongsTo(Sample::class);
+    }
 }

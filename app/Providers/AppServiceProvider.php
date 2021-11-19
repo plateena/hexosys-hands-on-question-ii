@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        App::bind('falcon-api', function () {
+        $this->app->bind('falcon-api', function () {
             return new App\Services\FalconApiServices();
         });
     }
