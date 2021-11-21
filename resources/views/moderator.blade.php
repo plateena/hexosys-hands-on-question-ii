@@ -54,6 +54,9 @@
                                         <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                                             <div>
                                                 <div
+                                                    @drop="fileDrop"
+                                                    @dragover.prevent
+                                                    @dragenter.prevent
                                                     class="flex justify-center px-6 pt-5 pb-6 mt-1 border-2 border-gray-300 border-dashed rounded-md">
                                                     <div class="text-center space-y-1">
                                                         <svg class="w-12 h-12 mx-auto text-gray-400"

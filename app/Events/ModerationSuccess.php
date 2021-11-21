@@ -2,14 +2,17 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * ModerationSuccess
+ *
+ * @copyright 2021 plateena
+ * @author plateena <plateena711@gmail.com>
+ */
 class ModerationSuccess
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
@@ -35,4 +38,4 @@ class ModerationSuccess
     {
         return new PrivateChannel('channel-name');
     }
-}
+} // End class ModerationSuccess

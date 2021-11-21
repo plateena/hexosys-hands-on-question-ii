@@ -7,16 +7,7 @@ new Vue({
     data: {
         imageUrl: "",
         imageBinary: "",
-        result: {
-            Version: "1.1 Beta",
-            Message: "succeed",
-            Code: 0,
-            "Min-Confidence": "0.5",
-            ModerationLabels: {
-                Weapon: { Confidence: "1.0", Labels: { Missile: 1 } },
-                Gambling: { Confidence: "0.98", Labels: { Gambling: 0.98 } },
-            },
-        },
+        result: "",
         headers: {},
     },
     components: {
@@ -32,10 +23,12 @@ new Vue({
             reader.addEventListener("load", this.postFile);
             reader.readAsArrayBuffer(file);
         },
+
         async postFile(event) {
             // let url =
             //     "https://asia-east2-falcon-293005.cloudfunctions.net/falcon";
             let url = "/api/moderate";
+
             try {
                 let response = await axios.post(
                     url,
@@ -54,6 +47,13 @@ new Vue({
             }
         },
 
+        // handle file drop
+        fileDrop(event) {
+            event.preventDefault();
+            this.processFileChange(event.type, event.dataTransfer.files[0]);
+        },
+
+        // handle form data between file upload or url submited
         populateFormData(event) {
             if (event.constructor.name == "ProgressEvent") {
                 this.headers = { "Content-Type": "image/jpeg" };
@@ -61,8 +61,9 @@ new Vue({
             }
 
             this.headers = {
-                "Content-Type": "application/x-www-form-urlencoded",
+                "Content-Type": "multipart/form-data",
             };
+
             let formData = new FormData();
             formData.append("imageUrl", this.imageUrl);
             return formData;

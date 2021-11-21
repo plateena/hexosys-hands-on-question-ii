@@ -1,0 +1,32 @@
+.vjs-tree {
+    margin-top: 15px;
+    border-radius: 8px;
+    min-height: 300px;
+    padding: 20px;
+    background-color: #282A36;
+
+    .vjs-tree__brackets {
+        color: #F8F8F2;
+    }
+
+    .vjs-tree__node {
+        &:hover {
+            background-color: #44475A;
+        }
+
+        span.vjs-key {
+            color: #50FA7B;
+        }
+
+        span.vjs-value {
+            &.vjs-value__number,
+            &.vjs-value__string {
+                color: #ff79c6;
+            }
+        }
+
+        .vjs-tree__indent.has-line {
+            border-left-color: purple;
+        }
+    }
+}

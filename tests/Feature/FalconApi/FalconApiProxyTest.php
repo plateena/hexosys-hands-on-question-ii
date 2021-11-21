@@ -73,7 +73,7 @@ class FalconApiProxyTest extends TestCase
         ]);
 
         $response = $this->actingAs($this->user)
-            ->postJson(
+            ->post(
                 $this->url,
                 ['imageUrl' => $imgUrl]
             );

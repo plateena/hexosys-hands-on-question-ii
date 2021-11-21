@@ -4,10 +4,16 @@ namespace App\Listeners;
 
 use App\Events\ModerationFileStored;
 use App\Models\Sample;
-use DB;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\DB;
 
+/**
+ * RecordModerationData
+ *
+ * Will record the file moderation result to the database
+ *
+ * @copyright 2021 plateena
+ * @author plateena <plateena711@gmail.com>
+ */
 class RecordModerationData
 {
     /**
@@ -23,12 +29,13 @@ class RecordModerationData
     /**
      * Handle the event.
      *
+     * Save moderation result to the database
+     *
      * @param  ModetationFileStored  $event
      * @return void
      */
     public function handle(ModerationFileStored $event)
     {
-
         DB::transaction(function () use ($event) {
             $sample = new Sample();
 
@@ -37,12 +44,14 @@ class RecordModerationData
             $sample->save();
 
 
-            foreach ($event->response->ModerationLabels as $key => $val) {
-                $sample->moderationLabels()->create([
-                    'name' => $key,
-                    'confidence' => $val->Confidence
-                ]);
+            if (collect($event->response)->has('ModerationLabels')) {
+                foreach ($event->response->ModerationLabels as $key => $val) {
+                    $sample->moderationLabels()->create([
+                        'name' => $key,
+                        'confidence' => $val->Confidence
+                    ]);
+                }
             }
         });
     }
-}
+} // End class RecordModerationData

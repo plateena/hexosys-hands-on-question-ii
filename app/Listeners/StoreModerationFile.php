@@ -5,9 +5,13 @@ namespace App\Listeners;
 use App\Events\ModerationFileStored;
 use App\Events\ModerationSuccess;
 use App\Services\FileServices;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
+/**
+ * StoreModerationFile
+ *
+ * @copyright 2021 plateena
+ * @author plateena <plateena711@gmail.com>
+ */
 class StoreModerationFile
 {
     /**
@@ -31,6 +35,7 @@ class StoreModerationFile
         $file = new FileServices($event->content);
         $file->save();
 
+        // trigger the event file stored
         ModerationFileStored::dispatch([$file->fileName, $event->response]);
     }
-}
+} // End class StoreModerationFile
