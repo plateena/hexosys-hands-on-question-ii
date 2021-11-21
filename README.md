@@ -1,3 +1,35 @@
+## My Answer Explanation
+
+I'm using the laravel sail to setup this project. Add the docker-compose.yml file in the root.
+I also add simple test as I'm using the TDD method to fix the API. The test database is setup
+in docker-init.sql that run on creating sail
+
+#### Task 1
+
+- I add request to falcon api in the service and create facade for this.
+- FalconApiServices will handle the request to falcon api and fix the json
+- Fixed json will be pass back to front end as json response
+ 
+#### Task 2
+
+- Add the process upload file using the url
+- using the same FalconApiServices to define which request is url / binary
+
+#### Task 3
+
+- using event and listener for store file function
+- add FileServices to handle file saving to storage 
+- generate file name using md5 and with time so the salt is unique
+- When file succeed store to storage it will trigger onother event
+- We record all data in DB using listener of event store file success
+ 
+#### Task 4
+
+- I using library vue-json-pretty to display JSON response 
+- Add scss to style the JSON and configure webpack, add style link to layout for this JSON preview
+- add new function to handle file drop to upload file 
+ 
+___
 ## Full Stack Engineer Assignment
 
 Requirement:
